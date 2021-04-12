@@ -1,0 +1,26 @@
+{% extends 'home/layout.html' %}
+
+{% block nav %}
+<div id="nav">
+    {% for model in models %}
+    <a>{{model.capitalize}}</a>
+    {% endfor %}
+</div>
+<hr>
+{% endblock %}
+
+{% block body %}
+<br>
+{% for account in accounts %}
+<hr>
+<or>
+    <li>{{account.name}}</li>
+    <li>{{account.username}}</li>
+    <li>{{account.password}}</li>
+</or>
+<hr>
+{% endfor %}
+
+
+
+{% endblock body %}
