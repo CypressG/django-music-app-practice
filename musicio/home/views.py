@@ -190,11 +190,14 @@ def add_song(request):
                 composer = form.cleaned_data["composer"]
                 author = form.cleaned_data['author']
                 description = form.cleaned_data['description']
+                genre = form.cleaned_data['genre']
                 song_url = begin + url_link + end
                 publisher = request.user.id
                 publisher = Publisher.objects.get(FK_user=User.objects.get(id=request.user.id))
                 Song.objects.create(name=name,description=description,author=author, composer=composer,song_url=song_url,FK_publisher=publisher).save()
                 return HttpResponseRedirect(reverse('home:index'))
+            else:
+                return HttpResponse(form.is_valid())
     return render(request,'home/add.html',{
         "form": AddSong(),
         "form_price": SongInfo()
@@ -236,5 +239,4 @@ def moderator_delete_song(request):
             return render(request, 'home/delete.html',{
                 "songs":songs
             })
-
     pass

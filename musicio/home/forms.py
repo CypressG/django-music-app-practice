@@ -8,12 +8,11 @@ class AddSong(forms.Form):
     author = forms.CharField( label="Author")
     description = forms.CharField(widget=forms.Textarea)
     song_url = forms.CharField(label="Spotify link")
-    genre = forms.ModelChoiceField(queryset=Genre.objects.all().values_list('name', flat=True), initial=0)
-    class Meta:
-        models = Genre
-        fields = [
-            "id", "name","description"
-        ]
+    genre = forms.ChoiceField(choices = [])
+
+    def __init__(self, *args, **kwargs):
+        super(AddSong, self).__init__(*args, **kwargs)
+        self.fields['genre'].choices = [(x.pk, x.name) for x in Genre.objects.all()]
 
 class SongInfo(forms.Form):
     price = forms.FloatField(label="Price")
