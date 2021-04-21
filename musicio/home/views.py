@@ -222,10 +222,10 @@ def delete_song(request):
             return render(request, 'home/delete.html', {
                 "songs":list_of_songs,
             }) 
-
-
-def edit_song(request):
-    pass
+def search(request):
+    return render(request,'home/search.html',{
+        "songs" : Song.objects.filter(name__contains=request.POST.get('search'))
+    })
 
 def moderator_delete_song(request):
     if request.user.role == 2:

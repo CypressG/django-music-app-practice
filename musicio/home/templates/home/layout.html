@@ -36,10 +36,17 @@
     <a href="{% url 'home:add_song' %}" class="btn btn-warning"> Add a song</a>
     <a href="{% url 'home:delete_song' %}" class="btn btn-warning"> Delete a song</a>
     {% endif %}
-
     </div>
     {% endblock %}
-    
+    {% block search %}
+    <br>
+        <form action="{% url 'home:search' %}" method="post" class = "search">
+            {% csrf_token %}
+            <input type="text" name="search" id="">
+            <input type="submit" value="Search">
+        </form>
+    <br>
+    {% endblock %}
     {% block body %}
     {% endblock %}
 

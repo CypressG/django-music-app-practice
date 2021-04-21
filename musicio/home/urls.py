@@ -17,5 +17,6 @@ urlpatterns = [
     path('add/song/',views.add_song, name='add_song'),
     path('delete/song/',views.delete_song, name='delete_song'),
     path('publisher/',views.publisher, name='publisher'),
-    path('moderator/delete',views.moderator_delete_song,name="mod_delete")
+    path('moderator/delete',views.moderator_delete_song,name="mod_delete"),
+    path('search/',views.search,name="search")
 ]

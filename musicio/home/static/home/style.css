@@ -34,6 +34,8 @@ body{
     background-color:#194350;
     text-align: right;
 }
+.search{
+}
 
 .mod-forms{
     background-color:red;
@@ -42,4 +44,5 @@ body{
     text-align: left;
 }
 #right{
+    text-align: right;
 }
