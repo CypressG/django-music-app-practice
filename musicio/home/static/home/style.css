@@ -38,3 +38,8 @@ body{
 .mod-forms{
     background-color:red;
 }
+#left{
+    text-align: left;
+}
+#right{
+}

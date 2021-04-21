@@ -8,17 +8,18 @@
 <div class="songs-container">
 {% for song in songs %}
 <div class="song-container">
-    <br>
+    
     <iframe {{song.song_url}}></iframe>
-    <form action="{% url 'home:publish' %}" method="POST">
+    <form action="{% url 'home:publish' %}" method="POST" id="left">
         {% csrf_token %}
         <input type="hidden" value="{{song.id}}" name="song" />
         <button type="Submit" class="btn btn-dark">Publish</button>
     </form>
-    <form action="{% url 'home:delete_song' %}" method="post">
+    <br>
+    <form action="{% url 'home:delete_song' %}" method="post" >
         {% csrf_token %}
         <input type="hidden" value="{{song.id}}" name="song" />
-        <button type="Submit" class="btn btn-dark">Remove</button>
+        <button type="Submit" class="btn btn-dark" id="right">Remove</button>
     </form>
     <br>
     <h3>{{song.name}}</h3>
