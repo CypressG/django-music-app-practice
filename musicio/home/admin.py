@@ -1,12 +1,13 @@
 from django.contrib import admin
-from .models import Genre, Account,Adress,Publisher,Library,Moderator,Order,Inventory,Song
+from .models import Genre, User,Address,Publisher,Song,Moderator,Basket,SongInfo,Order,OrderHistory
 # Register your models here.
 admin.site.register(Genre)
-admin.site.register(Account)
-admin.site.register(Adress)
+admin.site.register(User)
+admin.site.register(Address)
 admin.site.register(Publisher)
-admin.site.register(Library)
-admin.site.register(Moderator)
 admin.site.register(Order)
-admin.site.register(Inventory)
+admin.site.register(Moderator)
+admin.site.register(Basket)
 admin.site.register(Song)
+admin.site.register(OrderHistory)
+admin.site.register(SongInfo)

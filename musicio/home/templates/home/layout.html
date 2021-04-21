@@ -1,29 +1,66 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'home/style.css' %}">
-</head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'home/style.css' %}">
+
+    </head>
+
 <body>
 
-<h1>This is our main page</h1>
-<hr>
+    {% block nav %}
+    <div class="top-nav">
+    {% if user.role == 3 %}
+    <a href="{% url 'home:index' %}" class="btn btn-warning"> Home </a>
+    <a href="{% url 'home:basket' %}" class="btn btn-warning"> Basket </a>
+    <a href="{% url 'home:history' %}" class="btn btn-warning"> Order History </a>
+    <a href="{% url 'home:index' %}" class="btn btn-warning"> User </a>
+    {% endif %}
 
+    {% if user.role == 2 %}
+    <a href="{% url 'home:index' %}" class="btn btn-warning"> Home moderator</a>
+    <a href="{% url 'home:history' %}" class="btn btn-warning"> Delete a song</a>
+    {% endif %}   
 
+    {% if user.role == 1 %}
+    <a href="{% url 'home:publisher' %}" class="btn btn-warning"> Home publisher</a>
+    <a href="{% url 'home:add_song' %}" class="btn btn-warning"> Add a song</a>
+    <a href="{% url 'home:delete_song' %}" class="btn btn-warning"> Delete a song</a>
+    <a href="{% url 'home:index' %}" class="btn btn-warning"> Edit a song</a>
+    {% endif %}
 
-{% block nav %}
-
-{% endblock nav %}
+    </div>
+    {% endblock %}
     
-{% block head %}
-{% endblock head %}
-{% block body %}
-    
-{% endblock body %}
-    
+    {% block body %}
+    {% endblock %}
+
+    {% block bottom %}
+    {% if user.is_authenticated %}
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home:logout' %}">Log out</a>
+        </li>
+    </ul>
+
+    {% else %}
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home:login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home:register' %}">Register</a>
+        </li>
+    </ul>
+    {% endif %}
+    {% endblock %}
 </body>
+
 </html>

@@ -1,26 +1,41 @@
-{% extends 'home/layout.html' %}
+{% extends 'home/layout.html' %} {% block body %}
+<h1>Songs</h1>
+<hr />
+<div class="songs-container">
 
-{% block nav %}
-<div id="nav">
-    {% for model in models %}
-    <a>{{model.capitalize}}</a>
-    {% endfor %}
+{% for song in songs %}
+<div class="song-container">
+<hr class="song_lines" />
+<iframe {{song.song_url}}> </iframe>
+{% if song.id in basket_songs %}
+<form action="{% url 'home:delete' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{song.id}}" name="song" />
+    <input type="hidden" value="{{user.id}}" name="user" />
+    <button type="Submit" class="btn btn-dark">Delete from basket</button>
+</form>
+<br />
+
+<h3>{{song.name}}</h3>
+{{song.description}}
+<h6>${{song.FK_song_info.price}}</h6>
+<hr class="song_lines" />
 </div>
-<hr>
-{% endblock %}
-
-{% block body %}
-<br>
-{% for account in accounts %}
-<hr>
-<or>
-    <li>{{account.name}}</li>
-    <li>{{account.username}}</li>
-    <li>{{account.password}}</li>
-</or>
-<hr>
-{% endfor %}
-
-
+{% else %}
+<div class="song-container">
+<form action="{% url 'home:add' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{song.id}}" name="song" />
+    <input type="hidden" value="{{user.id}}" name="user" />
+    <button type="Submit" class="btn btn-dark">Add to Basket</button>
+</form>
+<br />
+<h3>{{song.name}}</h3>
+{{song.description}}
+<h6>${{song.FK_song_info.price}}</h6>
+<hr class="song_lines" />
+</div>
+{% endif %} {% endfor %}
+</div>
 
 {% endblock body %}

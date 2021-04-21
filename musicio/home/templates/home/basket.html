@@ -1,0 +1,40 @@
+{% extends "home/layout.html" %}
+
+
+
+{% block body %}
+{% if basket_items.count == 0 %}
+<h4>No items in a basket</h4>
+{% else %}
+<div class="songs-container">
+
+{% for basket_item in basket_items %}
+<div class="song-container">
+<hr>
+<h3>{{ basket_item.FK_song.name }} </h3> 
+<iframe {{basket_item.FK_song.song_url}}> </iframe>
+
+<p>{{ basket_item.FK_song.description }} 
+
+    <form action="{% url 'home:basket_delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{basket_item.FK_song.id}}" name="song">
+        <input type="hidden" value="{{user.id}}" name="user">
+        <button type="Submit" class="btn btn-danger">-</button>
+    </form>
+<h5>{{ basket_item.FK_song.FK_song_info.price }} $
+</h5>
+</p>
+
+    <hr>
+</div>
+    {% endfor %}
+    <form action="{% url 'home:order' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{basket_items}}" name="basket_items">
+        <button type="Submit" class="btn btn-dark">Order</button>
+    </form>    
+<h4>Final price: ${{sum}} </h4>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'home/layout.html' %}
+{% block body %}
+<hr>
+{% for song in songs %}
+    {{song.name}}
+    {{song.id}}
+    <form action="{% url 'home:delete_song' %}" method="post">
+        {%csrf_token%}
+        <input type="hidden" name="song" value={{song.id}}>
+        <input type="submit">
+    </form>
+    <hr>
+{% endfor %}
+{% endblock %}

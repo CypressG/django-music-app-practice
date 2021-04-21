@@ -1,20 +1,40 @@
-#nav{
-    color:aliceblue;
-    display:grid;
-    padding:10px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+body{
+    background-color:#2b6475;
+    color:blanchedalmond;
 }
-#nav a{
-    color:black;
-    text-align:center;
-    text-decoration: none;
-    padding:15px;
-    border: 2px solid rgba(0,0,0,0.4);
+.songs-container{
+    width:80%;
+    margin:auto;
+    background-color:#194350;
+}
+.songs-container > form{
+    width: 50%;
+    margin:auto;
+    text-align: center;
+    margin-top:5px;
+
+}
+.song-container{
+    border: 3px solid rgba(0,0,0,0.1);
+    text-align: center;
+    
+}
+.btn{
+    background-color:#ff8882;
+    border:none;
+    color:blanchedalmond;
+}
+.btn:hover{
+    background-color:#ffc2b4;
+}
+.nav{
+    background-color:#194350;
+}
+.top-nav{
+    background-color:#194350;
+    text-align: right;
 }
 
-#nav a:hover{
-    background-color: black;
-    color:white;
-}
-hr{
+.mod-forms{
+    background-color:red;
 }
