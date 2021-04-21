@@ -5,13 +5,6 @@
     {% for order in orders%}
     <h4>{{order.FK_song.name}}</h4>
     <iframe {{order.FK_song.song_url}}> </iframe>
-    {% if user.role == 2 %}
-    <form action="{% url 'home:delete_song' %}" method="post">
-        {%csrf_token%}
-        <input type="hidden" name="song" value={{song.id}}>
-        <input type="submit" class="btn btn-dark" value="Delete">
-    </form>
-    <hr>
-    {% endif %}
+
     {% endfor %}
 {% endblock %}

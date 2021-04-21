@@ -25,8 +25,10 @@
     {% endif %}
 
     {% if user.role == 2 %}
+
     <a href="{% url 'home:index' %}" class="btn btn-warning"> Home moderator</a>
-    <a href="{% url 'home:history' %}" class="btn btn-warning"> Delete a song</a>
+    <a href="{% url 'home:mod_delete' %}" class="btn btn-warning"> Delete a song</a>
+    
     {% endif %}   
 
     {% if user.role == 1 %}

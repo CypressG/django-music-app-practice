@@ -228,4 +228,13 @@ def edit_song(request):
     pass
 
 def moderator_delete_song(request):
+    if request.user.role == 2:
+        if request.method == "POST":
+            Song.objects.filter(id=request.POST.get('song')).delete()
+        else:
+            songs = Song.objects.all()
+            return render(request, 'home/delete.html',{
+                "songs":songs
+            })
+
     pass
