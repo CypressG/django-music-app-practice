@@ -53,19 +53,24 @@ def register(request):
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+        if (username == "" or email == "" or
+            password == "" or confirmation ==""):
+            return render(request, "home/register.html", {
+                "message": "You have to input all the fields."
+            })        
         if password != confirmation:
             return render(request, "home/register.html", {
                 "message": "Passwords must match."
             })
-
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
-            user.save()
+            user.save()   
         except IntegrityError:
             return render(request, "home/register.html", {
                 "message": "Username already taken."
             })
+        
         login(request, user)
         return HttpResponseRedirect(reverse("home:index"))
     else:
