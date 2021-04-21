@@ -2,6 +2,8 @@
 {% block body %}
 
 <div class="songs-container">
+    {{item}}
+    {{genre}}
 {% for song in songs %}
     <div class="song-container">
         <iframe {{song.song_url}}></iframe>

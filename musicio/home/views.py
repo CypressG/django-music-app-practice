@@ -2,7 +2,7 @@ from django.db import models
 from django.shortcuts import render
 from django.http import HttpResponse
 # Create your views here.
-from .models import User, Song, Basket, Order, OrderHistory, Publisher
+from .models import User, Song, Basket, Order, OrderHistory, Publisher,Genre
 from django.apps import apps
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -11,25 +11,31 @@ from django.db import IntegrityError
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import logout
-from .forms import AddSong,SongInfo
+from .forms import AddSong,SongInfo, Search
 
 @xframe_options_exempt
 def index(request):
     current_user = request.user
     id = current_user.id
     if current_user.is_anonymous:
-        render(request,'home/index.html')
+        render(request,'home/index.html',{
+            "search": Search()
+
+        })
 
     elif current_user.role == 1:
         return render(request, 'home/publisher.html', {
+            "search": Search()
+
         })
     elif current_user.role == 2:
         songs = Song.objects.filter(published=0)
 
         return render(request, 'home/moderator.html', {
-            "songs":songs
-        })
+            "songs":songs,
+            "search": Search()
 
+        })
     baskets = Basket.objects.filter(FK_user=id)
     basket_songs = []
     for basket in baskets:
@@ -42,7 +48,8 @@ def index(request):
             'songs': songs,
             'baskets': baskets,
             'basket_songs': basket_songs,
-            'idd': id
+            'idd': id,
+            "search": Search()
             })
 
 
@@ -200,7 +207,8 @@ def add_song(request):
                 return HttpResponse(form.is_valid())
     return render(request,'home/add.html',{
         "form": AddSong(),
-        "form_price": SongInfo()
+        "form_price": SongInfo(),
+
     })
 
 def publisher(request):
@@ -226,9 +234,28 @@ def delete_song(request):
                 "songs":list_of_songs,
             }) 
 def search(request):
-    return render(request,'home/search.html',{
-        "songs" : Song.objects.filter(name__contains=request.POST.get('search'))
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = Search(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            genre = form.cleaned_data['genre']
+            item = form.cleaned_data['item']
+            if genre == "Any":
+                return render(request,'home/search.html',{
+                    "songs":Song.objects.filter(name__contains=item)
+                })
+            else:
+                exact = Genre.objects.filter(id=genre)
+                return render(request,'home/search.html',{
+                    "songs": Song.objects.filter(FK_genre=exact[0])
+                })
+            return render(request,'home/search.html',{
+            "genre":genre,
+            "item":item
     })
+    return HttpResponseRedirect(reverse('home:index'))
+
 
 def moderator_delete_song(request):
     if request.user.role == 2:
