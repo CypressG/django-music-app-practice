@@ -1,0 +1,18 @@
+{% extends 'home/layout.html' %}
+{% block body %}
+
+<div class="songs-container">
+{% for song in songs %}
+    <div class="song-container">
+        <iframe {{song.song_url}}></iframe>
+        <br>
+        {{song.name}}
+        <br>
+        {{song.description}}
+        <br>
+        {{song.author}}
+
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
