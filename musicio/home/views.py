@@ -239,21 +239,11 @@ def search(request):
         form = Search(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            genre = form.cleaned_data['genre']
             item = form.cleaned_data['item']
-            if genre == "Any":
-                return render(request,'home/search.html',{
-                    "songs":Song.objects.filter(name__contains=item)
-                })
-            else:
-                exact = Genre.objects.filter(id=genre)
-                return render(request,'home/search.html',{
-                    "songs": Song.objects.filter(FK_genre=exact[0])
-                })
             return render(request,'home/search.html',{
-            "genre":genre,
-            "item":item
-    })
+                "songs":Song.objects.filter(name__contains=item)
+                })
+
     return HttpResponseRedirect(reverse('home:index'))
 
 

@@ -19,7 +19,3 @@ class SongInfo(forms.Form):
 
 class Search(forms.Form):
     item = forms.CharField()
-    genre = forms.ChoiceField(choices = [])
-    def __init__(self, *args, **kwargs):
-        super(Search, self).__init__(*args, **kwargs)
-        self.fields['genre'].choices = [(x.pk, x.name) for x in Genre.objects.all()]
